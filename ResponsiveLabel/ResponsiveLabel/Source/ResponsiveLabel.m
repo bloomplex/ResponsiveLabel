@@ -400,6 +400,9 @@ NSString *RLHighlightedBackgroundCornerRadius = @"HighlightedBackgroundCornerRad
 	NSDictionary *patternAttributes = [self.rangeAttributeDictionary objectForKey:[NSValue valueWithRange:self.truncatedPatternRange]];
 	[patternAttributes enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
 		NSRange availableRange = NSMakeRange(self.truncatedPatternRange.location, self.textStorage.length - self.attributedTruncationToken.length - self.truncatedPatternRange.location);
+        if (availableRange.length + availableRange.location > self.textStorage.length) {
+            availableRange.length = self.textStorage.length - availableRange.location;
+        }
 		[self.textStorage removeAttributeWithBoundsCheck:key range:availableRange];
 	}];
 }
